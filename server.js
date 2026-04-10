@@ -37,9 +37,9 @@ const s3 = new S3Client({
  * [POST] /api/convert
  * 비디오를 WebM으로 변환 후 R2에 업로드
  */
-app.post('/api/convert', upload.any(), async (req, res) => {
-  // 어떤 이름표(video, file 등)로 오든 첫 번째 파일을 집어듦
-  const file = req.files && req.files[0];
+app.post('/api/convert', upload.single('video'), async (req, res) => {
+  // 프론트엔드와 합의한 video 필드 하나만 받습니다.
+  const file = req.file;
   
   if (!file) {
     return res.status(400).json({ success: false, message: '파일이 업로드되지 않았습니다.' });
